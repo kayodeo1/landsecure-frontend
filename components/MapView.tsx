@@ -50,12 +50,26 @@ function zoneStyle(feature: any) {
   return { color, weight: 2, fillColor: color, fillOpacity: 0.22 };
 }
 
+const HEX_COLOR = /^#[0-9a-f]{3,8}$/i;
+
+/** Escape interpolated zone fields so admin-entered values can't inject markup. */
+function escapeHtml(value: unknown): string {
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
 function onEachZone(feature: any, layer: any) {
   const p = feature?.properties ?? {};
+  // Only allow a strict hex colour into the style attribute.
+  const color = HEX_COLOR.test(String(p.color ?? "")) ? p.color : "#d6322e";
   layer.bindPopup(
-    `<b>${p.name ?? "Zone"}</b><br>` +
-      `<span style="color:#5d6b78">${p.zone_type ?? ""} — ${p.authority ?? ""}</span><br>` +
-      `<span style="color:${p.color ?? "#d6322e"};font-weight:600">${p.status ?? ""}</span>`,
+    `<b>${escapeHtml(p.name ?? "Zone")}</b><br>` +
+      `<span style="color:#5d6b78">${escapeHtml(p.zone_type ?? "")} — ${escapeHtml(p.authority ?? "")}</span><br>` +
+      `<span style="color:${color};font-weight:600">${escapeHtml(p.status ?? "")}</span>`,
   );
 }
 
