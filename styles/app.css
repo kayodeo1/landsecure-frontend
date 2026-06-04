@@ -1,0 +1,60 @@
+/* ===== App-only additions (the design system itself is in landsecure.css) ===== */
+
+/* Leaflet should inherit the app font and sit under the topbar/sidebar */
+.leaflet-container { font: inherit; }
+.leaflet-popup-content { font-size: 13px; }
+
+/* loading + empty states */
+.spinner {
+  width: 18px; height: 18px; border-radius: 50%;
+  border: 2px solid var(--line); border-top-color: var(--green);
+  animation: ls-spin .7s linear infinite; display: inline-block; vertical-align: middle;
+}
+@keyframes ls-spin { to { transform: rotate(360deg); } }
+.center-screen { min-height: 60vh; display: grid; place-items: center; color: var(--muted); }
+.empty { text-align: center; color: var(--muted); padding: 40px 20px; }
+.skeleton { background: linear-gradient(90deg,#eef1f4,#f7f9fb,#eef1f4); background-size: 200% 100%;
+  animation: ls-sk 1.2s ease-in-out infinite; border-radius: 8px; }
+@keyframes ls-sk { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+
+/* inline form error / notice */
+.form-error { background: var(--red-l); color: #8a1f1c; border: 1px solid #f3c6c4;
+  padding: 10px 13px; border-radius: 9px; font-size: 13.5px; margin-bottom: 16px; }
+.form-note { background: var(--green-l); color: #0b4d31; border: 1px solid #bfe3cf;
+  padding: 10px 13px; border-radius: 9px; font-size: 13.5px; margin-bottom: 16px; }
+
+/* toast */
+.toast { position: fixed; right: 22px; bottom: 22px; z-index: 1000; background: var(--navy);
+  color: #fff; padding: 12px 18px; border-radius: 10px; box-shadow: var(--shadow);
+  font-size: 14px; max-width: 360px; }
+.toast.err { background: var(--red); }
+.toast.ok { background: var(--green); }
+
+/* admin: small toolbar row + modal */
+.btn-row { display: flex; gap: 10px; flex-wrap: wrap; }
+.modal-backdrop { position: fixed; inset: 0; background: rgba(13,36,56,.45); z-index: 1100;
+  display: grid; place-items: center; padding: 20px; }
+.modal { background: #fff; border-radius: var(--radius); box-shadow: var(--shadow);
+  width: 100%; max-width: 540px; max-height: 90vh; overflow: auto; }
+.modal .modal-h { padding: 18px 22px; border-bottom: 1px solid var(--line);
+  display: flex; align-items: center; justify-content: space-between; }
+.modal .modal-b { padding: 22px; }
+.modal .modal-f { padding: 16px 22px; border-top: 1px solid var(--line);
+  display: flex; justify-content: flex-end; gap: 10px; }
+
+/* simple on/off switch */
+.switch { position: relative; display: inline-block; width: 42px; height: 24px; }
+.switch input { display: none; }
+.switch .track { position: absolute; inset: 0; background: #c8d2dc; border-radius: 30px; transition: .2s; cursor: pointer; }
+.switch .track::before { content: ""; position: absolute; width: 18px; height: 18px; left: 3px; top: 3px;
+  background: #fff; border-radius: 50%; transition: .2s; }
+.switch input:checked + .track { background: var(--green); }
+.switch input:checked + .track::before { transform: translateX(18px); }
+
+/* clickable table rows */
+tr.clickable { cursor: pointer; }
+
+/* severity select swatches reuse pill colors; nothing else needed */
+.iconbtn { background: none; border: none; cursor: pointer; color: var(--muted); font-size: 15px; padding: 4px 6px; border-radius: 6px; }
+.iconbtn:hover { background: var(--bg); color: var(--navy); }
+.iconbtn.danger:hover { color: var(--red); }
